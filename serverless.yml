@@ -1,0 +1,56 @@
+org: therealgaryj
+app: hiringtests
+service: hiringtests
+
+frameworkVersion: ">=2.0.0"
+
+#resources:
+#  NotesBucket:
+#    Type: S3::Bucket
+resources:
+  Resources:
+    LambdaCloudwatchInvokePermission:
+      Type: AWS::Lambda::Permission
+      Properties:
+        FunctionName: "arn:aws:lambda:eu-west-2:693619507695:function:logzio-cloudwatch-log-shipper"
+        Principal: "logs.${self:provider.region}.amazonaws.com"
+        Action: "lambda:InvokeFunction"
+        SourceArn: "arn:aws:logs:${self:provider.region}:${self:custom.awsAccountId}:log-group:*:*"
+provider:
+  name: aws
+  runtime: go1.x
+  stage: dev
+  region: eu-west-2
+
+package:
+  exclude:
+    - ./**
+  include:
+    - ./bin/**
+
+functions:
+  notes-api:
+    handler: "bin/primes-api"
+    awsKmsKeyArn: "arn:aws:kms:eu-west-2:693619507695:key/d1c37c5c-b904-4e29-b49f-2aae3cc645cd"
+    environment:
+      LOG_LEVEL: "DEBUG"
+    events:
+      - http:
+          path: "primes/"
+          method: "any"
+plugins:
+  - serverless-domain-manager
+  - serverless-plugin-log-subscription
+custom:
+  awsAccountId: "693619507695"
+  customDomain:
+    domainName: "hiringtests.co.uk"
+    stage: ${opt:stage}
+    basePath: ""
+    certificateName: "hiringtests.co.uk"
+    createRoute53Record: true
+    endpointType: "regional"
+    securityPolicy: tls_1_2
+  logSubscription:
+    enabled: true
+    destinationArn: "arn:aws:lambda:eu-west-2:693619507695:function:logzio-cloudwatch-log-shipper"
