@@ -9,13 +9,13 @@ const maxPrimesKey = "maxPrime"
 
 func Initialize() *mux.Router {
 
-	notesService := NewService()
+	primesService := NewService()
 
 	r := mux.NewRouter()
 
-	r.Path("/primes/{" + maxPrimesKey + ":[0-9]+}").
+	r.Path("/primes/{" + maxPrimesKey + ":.+}").
 		Methods(http.MethodGet).
-		HandlerFunc(notesService.GetPrimesList)
+		HandlerFunc(primesService.GetPrimesList)
 
 	return r
 }

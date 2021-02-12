@@ -41,8 +41,6 @@ func (s *primesService) GetPrimesList(res http.ResponseWriter, req *http.Request
 
 	res.WriteHeader(http.StatusOK)
 	res.Header().Add("Content-Type", "application/json")
-	res.Header().Add("Foo", "bar")
-
 
 	jsonResponse, jsonErr := json.Marshal(responseBody)
 

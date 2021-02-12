@@ -12,14 +12,14 @@ resources:
     LambdaCloudwatchInvokePermission:
       Type: AWS::Lambda::Permission
       Properties:
-        FunctionName: "arn:aws:lambda:eu-west-2:693619507695:function:logzio-cloudwatch-log-shipper"
-        Principal: "logs.${self:provider.region}.amazonaws.com"
+        FunctionName: arn:aws:lambda:${self:provider.region}:${self:custom.awsAccountId}:function:logzio-cloudwatch-log-shipper
+        Principal: logs.${self:provider.region}.amazonaws.com
         Action: "lambda:InvokeFunction"
-        SourceArn: "arn:aws:logs:${self:provider.region}:${self:custom.awsAccountId}:log-group:*:*"
+        SourceArn: arn:aws:logs:${self:provider.region}:${self:custom.awsAccountId}:log-group:*:*
 provider:
   name: aws
   runtime: go1.x
-  stage: dev
+  stage: prod
   region: eu-west-2
 
 package:
@@ -29,23 +29,24 @@ package:
     - ./bin/**
 
 functions:
-  notes-api:
+  primes-api:
     handler: "bin/primes-api"
-    awsKmsKeyArn: "arn:aws:kms:eu-west-2:693619507695:key/d1c37c5c-b904-4e29-b49f-2aae3cc645cd"
+    kmsKeyArn: arn:aws:kms:${self:provider.region}:${self:custom.awsAccountId}:key/${self:custom.kmsKeyArn}
     environment:
       LOG_LEVEL: "DEBUG"
     events:
       - http:
-          path: "primes/"
+          path: "primes/{prime}"
           method: "any"
 plugins:
   - serverless-domain-manager
   - serverless-plugin-log-subscription
 custom:
   awsAccountId: "693619507695"
+  kmsKeyArn: "eb6d3ec2-bbce-4d71-8586-2172b49a1bbf"
   customDomain:
     domainName: "hiringtests.co.uk"
-    stage: ${opt:stage}
+    stage: ${opt:stage, self:provider.stage}
     basePath: ""
     certificateName: "hiringtests.co.uk"
     createRoute53Record: true
@@ -53,4 +54,4 @@ custom:
     securityPolicy: tls_1_2
   logSubscription:
     enabled: true
-    destinationArn: "arn:aws:lambda:eu-west-2:693619507695:function:logzio-cloudwatch-log-shipper"
+    destinationArn: arn:aws:lambda:${self:provider.region}:${self:custom.awsAccountId}:function:logzio-cloudwatch-log-shipper
