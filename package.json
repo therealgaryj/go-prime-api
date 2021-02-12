@@ -1,0 +1,13 @@
+{
+  "name": "canager-backend",
+  "version": "0.0.1",
+  "description": "Lambdas for Canager",
+  "dependencies": {
+    "serverless": "^2.23.0",
+  },
+  "devDependencies": {
+    "serverless-domain-manager": "^3.3.2",
+    "serverless-plugin-log-subscription": "^1.2.0"
+  },
+  "author": "Gary Johnson"
+}
