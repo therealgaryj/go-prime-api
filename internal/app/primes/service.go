@@ -3,6 +3,8 @@ package primes
 import (
 	"encoding/json"
 	"github.com/gorilla/mux"
+	"github.com/myesui/uuid"
+
 	"math/big"
 	"net/http"
 	"strconv"
@@ -41,6 +43,7 @@ func (s *primesService) GetPrimesList(res http.ResponseWriter, req *http.Request
 
 	res.WriteHeader(http.StatusOK)
 	res.Header().Add("Content-Type", "application/json")
+	res.Header().Add("X-Request-Id", uuid.NewV4().String())
 
 	jsonResponse, jsonErr := json.Marshal(responseBody)
 
