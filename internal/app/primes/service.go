@@ -2,14 +2,18 @@ package primes
 
 import (
 	"encoding/json"
-	"github.com/gorilla/mux"
-	"github.com/myesui/uuid"
-
+	"fmt"
 	"math/big"
 	"net/http"
 	"strconv"
+
+	"github.com/gorilla/mux"
+	"github.com/myesui/uuid"
+
+	"github.com/therealgaryj/go-prime-api/pkg/log"
 )
 
+const maxPrimeFor500Error = 1000000
 var primeCache = make([]bool, 0)
 
 type Service interface {
@@ -31,6 +35,11 @@ func (s *primesService) GetPrimesList(res http.ResponseWriter, req *http.Request
 
 	if err != nil {
 		sendErrorResponse(res, 400, "cannot parse max prime")
+		return
+	}
+
+	if maxPrime == maxPrimeFor500Error {
+		sendErrorResponse(res, 500, fmt.Sprintf("max prime was %d", maxPrimeFor500Error))
 		return
 	}
 
@@ -63,6 +72,7 @@ func generatePrimes(maxPrime int) []int {
 	}
 
 	if maxPrime > len(primeCache) + 1 {
+		log.Debug(fmt.Sprintf("Generating missing primes to target %d", maxPrime))
 
 		nextPrimes := make([]bool, (maxPrime - len(primeCache)) + 1)
 		for x := 0; x < len(nextPrimes); x++ {
@@ -70,6 +80,8 @@ func generatePrimes(maxPrime int) []int {
 		}
 
 		primeCache = append(primeCache, nextPrimes...)
+	} else {
+		log.Debug(fmt.Sprintf("Primes to target=%d already cached", maxPrime))
 	}
 
 

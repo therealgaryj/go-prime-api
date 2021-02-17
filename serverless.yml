@@ -38,6 +38,7 @@ functions:
       - http:
           path: "primes/{prime}"
           method: "any"
+    timeout: 10
 plugins:
   - serverless-domain-manager
   - serverless-plugin-log-subscription

@@ -229,13 +229,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/hiringtests/prod/1613382617576-2021-02-15T09:50:17.576Z/hiringtests.zip"
+                "S3Key": "serverless/hiringtests/prod/1613568103515-2021-02-17T13:21:43.515Z/hiringtests.zip"
               },
               "Handler": "bin/primes-api",
               "Runtime": "go1.x",
               "FunctionName": "hiringtests-prod-primes-api",
               "MemorySize": 1024,
-              "Timeout": 6,
+              "Timeout": 10,
               "KmsKeyArn": "arn:aws:kms:eu-west-2:693619507695:key/eb6d3ec2-bbce-4d71-8586-2172b49a1bbf",
               "Environment": {
                 "Variables": {
@@ -253,14 +253,14 @@
               "PrimesDashapiLogGroup"
             ]
           },
-          "PrimesDashapiLambdaVersionKByG2sUWxdG68fBXZT3qebzbDE3gvBTRTsjdxnhFE": {
+          "PrimesDashapiLambdaVersionnyXDZjZ109ggyPdLFArBoDJbbE6pFQUki5W7nfeAA": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "PrimesDashapiLambdaFunction"
               },
-              "CodeSha256": "/7136cWokyjEML1s45+nn98cEvvd2KLaVlM3fQzdg9s="
+              "CodeSha256": "+FdDiMb3Gj0ZTuCT/TwcJ+qEtEGi69EQBXX0gT5eaic="
             }
           },
           "ApiGatewayRestApi": {
@@ -345,7 +345,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1613382604927": {
+          "ApiGatewayDeployment1613568089482": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -503,7 +503,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/hiringtests/prod/1613382617576-2021-02-15T09:50:17.576Z/custom-resources.zip"
+                "S3Key": "serverless/hiringtests/prod/1613568103515-2021-02-17T13:21:43.515Z/custom-resources.zip"
               },
               "FunctionName": "hiringtests-prod-custom-resource-apigw-cw-role",
               "Handler": "apiGatewayCloudWatchRole/handler.handler",
@@ -579,7 +579,7 @@
           "PrimesDashapiLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "PrimesDashapiLambdaVersionKByG2sUWxdG68fBXZT3qebzbDE3gvBTRTsjdxnhFE"
+              "Ref": "PrimesDashapiLambdaVersionnyXDZjZ109ggyPdLFArBoDJbbE6pFQUki5W7nfeAA"
             }
           },
           "ServiceEndpoint": {
@@ -734,13 +734,13 @@
             }
           }
         ],
+        "timeout": 10,
         "name": "hiringtests-prod-primes-api",
         "package": {},
         "memory": 1024,
-        "timeout": 6,
         "runtime": "go1.x",
         "vpc": {},
-        "versionLogicalId": "PrimesDashapiLambdaVersionKByG2sUWxdG68fBXZT3qebzbDE3gvBTRTsjdxnhFE"
+        "versionLogicalId": "PrimesDashapiLambdaVersionnyXDZjZ109ggyPdLFArBoDJbbE6pFQUki5W7nfeAA"
       }
     },
     "resources": {
@@ -785,7 +785,7 @@
           "serverless_sdk/**"
         ],
         "artifact": "/mnt/c/dev/code/go/src/github.com/therealgaryj/go-prime-api/.serverless/hiringtests.zip",
-        "artifactDirectoryName": "serverless/hiringtests/prod/1613382617576-2021-02-15T09:50:17.576Z"
+        "artifactDirectoryName": "serverless/hiringtests/prod/1613568103515-2021-02-17T13:21:43.515Z"
       },
       "functions": {
         "$ref": "$[\"service\"][\"functions\"]"
@@ -804,7 +804,7 @@
     "artifact": "/mnt/c/dev/code/go/src/github.com/therealgaryj/go-prime-api/.serverless/hiringtests.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/hiringtests/prod/1613382617576-2021-02-15T09:50:17.576Z",
+    "artifactDirectoryName": "serverless/hiringtests/prod/1613568103515-2021-02-17T13:21:43.515Z",
     "artifact": "hiringtests.zip"
   }
 }
